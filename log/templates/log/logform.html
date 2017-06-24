@@ -1,0 +1,88 @@
+<!--
+  logform.html
+  ==============================================================================
+
+  This template shows the form used make log queries.
+ -->
+
+<html>
+
+<head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>Log Query</title>
+</head>
+
+<body
+
+<!-- Include the global page header -->
+{% include "includes/header.html" %}
+
+<!-- This is where the unique content for each page goes -->
+<div class="content">
+
+    <div class="edit-form" id="edit-form">
+        <div class="bg-color-white rcorners-10 edit-form-inner">
+            <h1>Log Query</h1>
+            <div class="sep-dashed-grey"></div>
+            <p class="center text-center">Press submit with blank fields to see all log events</p>
+            <form class="center" action="/log/" method="post">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-label">{{ form.source.label_tag }}</div>
+                    <div class="form-field">{{ form.source }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-label">{{ form.action.label_tag }}</div>
+                    <div class="form-field">{{ form.action }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-label">{{ form.eventCode.label_tag }}</div>
+                    <div class="form-field">{{ form.eventCode }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label class="form-label" for="date">Date</label>
+                    <input class="form-field" type="text" id="datepicker" name="date">
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label" for="time">Time</label>
+                    <input class="form-field" type="text" id="time" name="time">
+                  </div>
+                </div>
+                <div class="edit-submit"><input class="button-gradient-red" type="submit" value="Submit"/></div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End content -->
+
+<script>
+$(function () {
+  $("#datepicker").datepicker({
+      yearRange: "1910:2016",
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "yy-mm-dd"
+  });
+});
+
+$('#time').timepicker({
+  'timeFormat': 'h:i A',
+  'step': 15
+// 'disableTimeRanges': [
+//     ['1am', '2am'],
+//     ['3am', '4:01am']
+// ]
+});
+</script>
+</body>
+
+</html>

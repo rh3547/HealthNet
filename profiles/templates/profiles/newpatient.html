@@ -1,0 +1,364 @@
+<!--
+  newpatient.html
+  ==============================================================================
+
+  This template shows the forms used for new patients.
+ -->
+
+<html>
+
+<head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>New Profile</title>
+
+
+</head>
+
+<body>
+<div id="top"></div>
+<!-- Include the global page header -->
+{% include "includes/header.html" %}
+
+<!-- This is where the unique content for each page goes -->
+<div class="content">
+    <p class="text-center text-white" style="margin-top: 50px;">Thank you for creating your account! Before you can
+        login and use it, we first need some basic information from you.</p>
+
+    <div class="bg-color-white rcorners-10 center" style="width: 50%; padding: 8px;">
+      <p class="progress-label">Progress:</p>
+      <div id="progressbar"></div>
+      <p class="center text-center ui-progressbar-value"></p>
+    </div>
+    <div class="edit-form" id="edit-form">
+        <div class="bg-color-white rcorners-10 edit-form-inner">
+            <h1>Patient Registration</h1>
+            <div class="sep-dashed-grey"></div>
+
+            <form class="center" action="/profiles/{{ username }}" method="post">
+                {% csrf_token %}
+
+                <!-- Contact Info -->
+                <div id="contact-info">
+                    <h2>Personal Information</h2>
+                    <label for="birthDate">Date of Birth</label>
+                    <input type="text" id="datepicker" name="birthDate">
+
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <div class="form-label">{{ contactForm.firstName.label_tag }}</div>
+                        <div class="form-field">{{ contactForm.firstName }}</div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-label">{{ contactForm.middleInitial.label_tag }}</div>
+                        <div class="form-field">{{ contactForm.middleInitial }}</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-label">{{ contactForm.lastName.label_tag }}</div>
+                        <div class="form-field">{{ contactForm.lastName }}</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-label">{{ contactForm.phoneNumber.label_tag }}</div>
+                        <div class="form-field">{{ contactForm.phoneNumber }}</div>
+                      </div>
+                    </div>
+                </div>
+
+                <!-- Address Info -->
+                <div id="address-info">
+                    <h2>Address Information</h2>
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div class="form-label">{{ contactForm.street.label_tag }}</div>
+                        <div class="form-field">{{ contactForm.street }}</div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-label">{{ contactForm.city.label_tag }}</div>
+                        <div class="form-field">{{ contactForm.city }}</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-label">{{ contactForm.state.label_tag }}</div>
+                        <div class="form-field">{{ contactForm.state }}</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-label">{{ contactForm.zipcode.label_tag }}</div>
+                        <div class="form-field">{{ contactForm.zipcode }}</div>
+                      </div>
+                    </div>
+                </div>
+
+                <!-- Medical Info -->
+                <div id="medical-info">
+                    <h2>Medical Information</h2>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-label">{{ patientForm.heightFeet.label_tag }}</div>
+                        <div class="form-field">{{ patientForm.heightFeet }}</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-label">{{ patientForm.heightInches.label_tag }}</div>
+                        <div class="form-field">{{ patientForm.heightInches }}</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-label">{{ patientForm.weight.label_tag }}</div>
+                        <div class="form-field">{{ patientForm.weight }}</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-label">{{ patientForm.hospitalPref.label_tag }}</div>
+                        <div class="form-field">{{ patientForm.hospitalPref }}</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-label">{{ patientForm.insuranceCompany.label_tag }}</div>
+                        <div class="form-field">{{ patientForm.insuranceCompany }}</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-label">{{ patientForm.insuranceId.label_tag }}</div>
+                        <div class="form-field">{{ patientForm.insuranceId }}</div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="edit-submit"><input style="margin-right: 5%;" type="submit" id="edit-back"
+                                                class="button-gradient-red" value="Back"></button><input
+                        id="edit-submit" type="submit" value="Next" class="button-gradient-red"/></div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End content -->
+
+<script>
+    $(function () {
+        $("#datepicker").datepicker({
+            yearRange: "1910:2015",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd"
+        });
+    });
+</script>
+
+<script>
+    var formIndex = 0;
+    var editBack = $('#edit-back')
+    var editSubmit = $('#edit-submit')
+    var medicalInfo = $('#medical-info')
+    var contactInfo = $('#contact-info')
+    var addressInfo = $('#address-info')
+    var progressBar = $("#progressbar")
+
+    $(function() {
+      progressBar.progressbar({
+        value: 33
+      });
+    });
+    progressbarValue = progressBar.find( ".ui-progressbar-value" );
+    progressbarValue.css({
+        "background": '#249117'
+    });
+    progressLabel = $( ".progress-label" );
+    progressLabel.text( "Step 1 of 3" );
+
+    medicalInfo.addClass('hide');
+    addressInfo.addClass('hide');
+
+    editBack.addClass('hide');
+
+    editSubmit.on('click', function (e) {
+        // From contact to address
+        if (formIndex == 0) {
+            e.preventDefault();
+
+            medicalInfo.removeClass('fade-grow-in');
+            medicalInfo.removeClass('fade-grow-out');
+            contactInfo.removeClass('fade-grow-in');
+            contactInfo.removeClass('fade-grow-out');
+            addressInfo.removeClass('fade-grow-in');
+            addressInfo.removeClass('fade-grow-out');
+            editBack.removeClass('fade-grow-in');
+            editBack.removeClass('fade-grow-out');
+
+            contactInfo.addClass('fade-grow-out');
+            contactInfo.animate({
+                height: "0px",
+                opacity: 0
+            }, 300, function () {
+                contactInfo.addClass('hide');
+            });
+
+            addressInfo.removeClass('hide');
+            addressInfo.animate({
+                height: "200px",
+                opacity: 100
+            }, 250, function () {
+            });
+            addressInfo.addClass('scale-0').addClass('fade-grow-in');
+
+            editBack.removeClass('hide');
+            editBack.animate({
+                height: "40px",
+                opacity: 100
+            }, 250, function () {
+            });
+            editBack.addClass('scale-0').addClass('fade-grow-in');
+
+            document.getElementById("edit-submit").value = "Next";
+            window.location.replace('#top');
+
+            formIndex = 1;
+            progressBar.progressbar("value", 66);
+            progressLabel.text( "Step 2 of 3" );
+        }
+        // From address to medical
+        else if (formIndex == 1) {
+          e.preventDefault();
+
+          medicalInfo.removeClass('fade-grow-in');
+          medicalInfo.removeClass('fade-grow-out');
+          addressInfo.removeClass('fade-grow-in');
+          addressInfo.removeClass('fade-grow-out');
+          contactInfo.removeClass('fade-grow-in');
+          contactInfo.removeClass('fade-grow-out');
+          editBack.removeClass('fade-grow-in');
+          editBack.removeClass('fade-grow-out');
+
+          addressInfo.addClass('fade-grow-out');
+          addressInfo.animate({
+              height: "0px",
+              opacity: 0
+          }, 300, function () {
+              addressInfo.addClass('hide');
+          });
+
+          medicalInfo.removeClass('hide');
+          medicalInfo.animate({
+              height: "400px",
+              opacity: 100
+          }, 250, function () {
+          });
+          medicalInfo.addClass('scale-0').addClass('fade-grow-in');
+
+          editBack.removeClass('hide');
+          editBack.animate({
+              height: "40px",
+              opacity: 100
+          }, 250, function () {
+          });
+          editBack.addClass('scale-0').addClass('fade-grow-in');
+
+          document.getElementById("edit-submit").value = "Register";
+          window.location.replace('#top');
+
+          formIndex = 2;
+          progressBar.progressbar("value", 100);
+          progressLabel.text( "Last Step!" );
+        }
+    });
+
+    editBack.on('click', function (e) {
+      // From address to contact
+      if (formIndex == 1) {
+        e.preventDefault();
+
+        medicalInfo.removeClass('fade-grow-in');
+        medicalInfo.removeClass('fade-grow-out');
+        addressInfo.removeClass('fade-grow-in');
+        addressInfo.removeClass('fade-grow-out');
+        contactInfo.removeClass('fade-grow-in');
+        contactInfo.removeClass('fade-grow-out');
+        editBack.removeClass('fade-grow-in');
+        editBack.removeClass('fade-grow-out');
+
+        addressInfo.addClass('fade-grow-out');
+        addressInfo.animate({
+            height: "0px",
+            opacity: 0
+        }, 300, function () {
+            medicalInfo.addClass('hide');
+        });
+
+        editBack.addClass('fade-grow-out');
+        editBack.animate({
+            height: "0px",
+            opacity: 0
+        }, 300, function () {
+            editBack.addClass('hide');
+        });
+
+        contactInfo.removeClass('hide');
+        contactInfo.animate({
+            height: "300px",
+            opacity: 100
+        }, 250, function () {
+        });
+        contactInfo.addClass('scale-0').addClass('fade-grow-in');
+
+        document.getElementById("edit-submit").value = "Next";
+        window.location.replace('#top');
+
+        formIndex = 0;
+        progressBar.progressbar("value", 33);
+        progressLabel.text( "Step 1 of 3" );
+      }
+      // From medical to address
+      else if (formIndex == 2) {
+        e.preventDefault();
+
+        medicalInfo.removeClass('fade-grow-in');
+        medicalInfo.removeClass('fade-grow-out');
+        addressInfo.removeClass('fade-grow-in');
+        addressInfo.removeClass('fade-grow-out');
+        contactInfo.removeClass('fade-grow-in');
+        contactInfo.removeClass('fade-grow-out');
+        editBack.removeClass('fade-grow-in');
+        editBack.removeClass('fade-grow-out');
+
+        medicalInfo.addClass('fade-grow-out');
+
+        medicalInfo.animate({
+            height: "0px",
+            opacity: 0
+        }, 300, function () {
+            medicalInfo.addClass('hide');
+        });
+
+        addressInfo.removeClass('hide');
+        addressInfo.animate({
+            height: "200px",
+            opacity: 100
+        }, 250, function () {
+        });
+        addressInfo.addClass('scale-0').addClass('fade-grow-in');
+
+        editBack.removeClass('hide');
+        editBack.animate({
+            height: "40px",
+            opacity: 100
+        }, 250, function () {
+        });
+        editBack.addClass('scale-0').addClass('fade-grow-in');
+
+        document.getElementById("edit-submit").value = "Next";
+        window.location.replace('#top');
+
+        formIndex = 1;
+        progressBar.progressbar("value", 66);
+        progressLabel.text( "Step 2 of 3" );
+      }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!--
+  editpatientprofile.html
+  ==============================================================================
+
+  This template shows the forms used to edit a patient's profile.
+ -->
+
+<html>
+
+<head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>Edit Profile</title>
+</head>
+
+<body>
+
+<!-- Include the global page header -->
+{% include "includes/header.html" %}
+
+<!-- Include the page sidebar -->
+{% include "includes/sidebar.html" %}
+
+<!-- This is where the unique content for each page goes -->
+<div class="content">
+
+    <div class="edit-form" id="edit-form">
+        <div class="bg-color-white rcorners-10 edit-form-inner">
+            <h1>Edit Profile</h1>
+            <div class="sep-dashed-grey"></div>
+            <form action="/profiles/{{ username }}/edit" method="post">
+              <label for="birthDate">Date of Birth</label>
+              <input type="text" id="datepicker" name="birthDate" value="">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-label">
+                        {{ field.label_tag }}
+                    </div>
+                    <div class="form-field">
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <div class="edit-submit"><input class="button-gradient-red" type="submit" value="Save"/></div>
+            </form>
+            <div class="edit-submit"><a href="/profiles/{{ username }}"><input type="submit" class="button-gradient-red"
+                                                                               value="Cancel"></a></div>
+        </div>
+    </div>
+</div>
+<!-- End content -->
+
+<script>
+    $(function () {
+        $("#datepicker").datepicker({
+            yearRange: "1910:2015",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd"
+        });
+    });
+
+var month = parseInt({{ birthDate.month }});
+var day = parseInt({{ birthDate.day }});
+
+var yearStr = {{ birthDate.year }};
+var monthStr = {{ birthDate.month }};
+var dayStr = {{ birthDate.day }};
+
+if (month < 10) {
+  monthStr = "0" + String(month);
+}
+
+if (day < 10) {
+  dayStr = "0" + String(day);
+}
+
+document.getElementById('datepicker').value = yearStr + "-" + monthStr + "-" + dayStr;
+</script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!--
+  index.html
+  ==============================================================================
+
+  This template shows the form used to log in to the system.
+ -->
+
+<html>
+<head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>HealthNet - Login</title>
+</head>
+
+<body style="overflow: hidden;">
+
+<!-- Include the global page header -->
+{% include "includes/header.html" %}
+
+<!-- This is where the unique content for each page goes -->
+<div class="content">
+
+    <div {% if not messages %}class="index-login animate-from-bottom"{% else %}class="index-login"{% endif %}>
+        <div class="index-login-inner bg-color-white rcorners-10" id="index-login-inner">
+            <div class="center" style="height: 60px; position: relative;"><h1 class="text-center" id="box-message">
+                Login</h1></div>
+            <form action="/login/" method="post" name="indexform" id="indexform">
+                {% csrf_token %}
+                <div class="field-icon fa fa-user"></div>
+                {{ form.username }}
+                <div id="email-div">
+                    <div class="field-icon fa fa-envelope hide" id="email-icon"></div>
+                </div>
+                <div id="password-icon" class="field-icon fa fa-key"></div>
+                {{ form.password }}
+                <input class="button-gradient-red" id="sub-btn" type="submit" value="Login"/>
+            </form>
+            <div class="center text-center">
+                <p class="text-center" style="display: inline;" id="link-p">Don't have an account? </p><a href=""
+                                                                                                          id="link-a">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="center">
+        {% if error_message %}
+            <h2 class="text-center" style="color: #ffffff; text-align: center;">{{ error_message }}</h2>
+        {% endif %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <h2 class="text-center scale-0 fade-grow-in"
+                    style="color: #ffffff; text-align: center;">{{ message }}</h2>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+<!-- End content -->
+
+<script>
+    var loginShown = true; // Used to alternate between the two forms
+
+    // When the Register or Login link is clicked, swap the forms
+    $('#link-a').on('click', function (e) {
+        e.preventDefault(); // Prevent the page from reloading as a link would normally do
+
+        // If the login form is currently shown
+        var boxMessage = $('#box-message')
+        var emailDiv = $('#email-div')
+        if (loginShown) {
+            // Create the new email field for the registration form
+            var emailField = document.createElement("INPUT");
+            emailField.setAttribute('id', "email-field");
+            emailField.setAttribute('name', "email");
+            emailField.setAttribute('required', "true");
+            emailField.type = "email";
+            emailField.placeholder = "email";
+            document.getElementById('email-div').appendChild(emailField); // Add the field
+
+            // Animate the name of the form at the top to fly out to the left,
+            // change the text, then fly back in from the right
+
+            boxMessage.animate({
+                left: "-100px"
+            }, 200, function () {
+                boxMessage.text("Register");
+                document.getElementById('box-message').style.left = "400px";
+
+                boxMessage.animate({
+                    left: "50%"
+                }, 200, function () {
+                });
+            });
+
+            $('#email-icon').removeClass("hide"); // Show the field icon
+
+            // Set the icon and new field to animate in
+            emailDiv.removeClass("fade-grow-in");
+            emailDiv.removeClass("fade-grow-out");
+            emailDiv.addClass('scale-0').addClass('fade-grow-in');
+
+            // Also animate the div they're in to increase in height and opacity
+            // so it is at the right size to show the fields.
+            // *This only applies after the registration form has been shown once
+            emailDiv.animate({
+                height: "60px",
+                opacity: 100
+            }, 250, function () {
+
+                // Once the animation finishes, change the info around the form
+                document.getElementById("sub-btn").value = "Register";
+                $('#link-p').text("Have an account?  ");
+                $('#link-a').text("Login");
+                document.indexform.action = "/register/";
+
+                loginShown = false;
+            });
+        }
+        else {
+            // Animate the name of the form at the top to fly out to the left,
+            // change the text, then fly back in from the right
+            boxMessage.animate({
+                left: "-100px"
+            }, 300, function () {
+                boxMessage.text("Login");
+                document.getElementById('box-message').style.left = "400px"
+
+                boxMessage.animate({
+                    left: "50%"
+                }, 200, function () {
+                });
+            });
+
+            // Set the email field to animate out
+            emailDiv.removeClass("fade-grow-in");
+            emailDiv.removeClass("fade-grow-out");
+            emailDiv.addClass('fade-grow-out');
+
+            // Animate the email field div to change in size as the field animates
+            // out so the height of the form box changes gradually rather than
+            // immediatly after the field is removed.
+            emailDiv.animate({
+                height: "0px",
+                opacity: 0
+            }, 300, function () {
+
+                // After the animations remove the email field, hide the icon, and
+                // change the info around the form.
+                $('#email-field').remove();
+                $('#email-icon').addClass("hide");
+                document.getElementById("sub-btn").value = "Login";
+                $('#link-p').text("Don't have an account?  ");
+                $('#link-a').text("Register");
+                document.indexform.action = "/login/";
+
+                loginShown = true;
+            });
+        }
+    });
+</script>
+</body>
+</html>

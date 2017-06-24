@@ -1,0 +1,55 @@
+<!--
+  page-frame.html
+  ==============================================================================
+
+  This file can be used as a general skeleton to start with when making a new
+  template.
+ -->
+
+<html>
+
+  <head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>View Appointment</title>
+  </head>
+
+  <body>
+
+    <!-- Include the global page header -->
+    {% include "includes/header.html" %}
+
+    <!-- This is where the unique content for each page goes -->
+    <div class="content">
+      <div class="edit-form">
+        <div class="bg-color-white rcorners-10 edit-form-inner">
+          <h1>Appointment</h1>
+          <div class="sep-dashed-grey"></div>
+          <h3>Title</h3>
+          <p>{{ appointment.title }}</p>
+          <h3>Start Date & Time</h3>
+          <p>{{ appointment.startDate }} {{ appointment.startTime }}</p>
+          <h3>End Date & Time</h3>
+          <p>{{ appointment.endDate }} {{ appointment.endTime }}</p>
+          <h3>Patient</h3>
+          <p>{{ patientContact.firstName }}</p>
+          <h3>Doctor</h3>
+          <p>{{ appointment.doctor }}</p>
+          <h3>Hospital</h3>
+          <p>{{ appointment.hospital }}</p>
+          <h3>Room</h3>
+          <p>{{ appointment.room }}</p>
+          <h3>Reason</h3>
+          <p>{{ appointment.reason }}</p>
+        </div>
+        <div class="edit-submit"><a href="/appointments/{{ hnuser.user.username }}/{{ appointment.pk }}/edit"><input type="submit" class="button-gradient-red" value="Edit"></a></div>
+        <div class="edit-submit"><a href="/appointments/{{ hnuser.user.username }}/{{ appointment.pk }}/cancel"><input type="submit" class="button-gradient-red" value="Delete"></a></div>
+        <div class="edit-submit"><a href="/appointments/{{ hnuser.user.username }}"><input type="submit" class="button-gradient-red" value="Back"></a></div>
+      </div>
+    </div>
+    <!-- End content -->
+
+  </body>
+
+</html>

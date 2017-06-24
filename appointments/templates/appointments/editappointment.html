@@ -1,0 +1,58 @@
+<!--
+  editcontact.html
+  ==============================================================================
+
+  This template shows the form used to edit a users contact.
+ -->
+
+<html>
+
+  <head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>HealthNet - Edit Contact</title>
+  </head>
+
+  <body style="overflow: hidden;">
+
+    <!-- Include the global page header -->
+    {% include "includes/header.html" %}
+
+    <!-- Include the page sidebar -->
+    {% include "includes/sidebar.html" %}
+
+    <!-- This is where the unique content for each page goes -->
+    <div class="content">
+
+      <div class="center">
+        <form action="/appointments/{{ username }}/editappointment/{{ pk }}" method="post">
+        <input type="text" id="datepicker" name="when">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="form-label">
+              {{ field.label_tag }}
+            </div>
+            <div class="form-field">
+              {{ field }}
+            </div>
+          {% endfor %}
+          <input type="submit" value="Add" />
+        </form>
+      </div>
+    </div>
+    
+    <script>
+    $(function() {
+      $( "#datepicker" ).datepicker({
+        yearRange: "1910:2015",
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd"
+      });
+    });
+    </script>
+    <!-- End content -->
+  </body>
+
+</html>

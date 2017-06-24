@@ -1,0 +1,191 @@
+<!-- Sidebar -->
+<div id="sidebar" class="">
+  <div id="sidebar-header" onclick="sidebarToggle()">
+    <h2>Navigation</h2>
+    <div id="sidebar-bars" class="">
+      <div id="bar1"></div>
+      <div id="bar2"></div>
+      <div id="bar3"></div>
+    </div>
+  </div>
+  <div id="sidebar-nav-panel" class="panel panel-default">
+      <div id="sidebar-nav" class="list-group">
+
+          <a href="/profiles/{{ hnuser.user.username }}" id="profile-nav" class="sidebar-nav-item list-group-item" data-parent="#sidebar">
+              <i class="icon-dashboard"></i> Profile
+          </a>
+          <div id="" class="list-group subitem collapse">
+              <a href="/profiles/{{ hnuser.user.username }}" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> View Profile
+              </a>
+              <a href="/profiles/{{ hnuser.user.username }}/edit" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Edit Profile
+              </a>
+          </div>
+
+          <a href="#" class="sidebar-nav-item list-group-item" id="appointment-nav" data-parent="#sidebar">
+              <i class="icon-group"></i> Appointments
+          </a>
+          <div id="" class="list-group subitem collapse">
+              <a href="/appointments/{{ hnuser.user.username }}" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> View Calendar
+              </a>
+              <a href="/appointments/{{ hnuser.user.username }}/createappointment" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Create Appointment
+              </a>
+          </div>
+
+          <a href="#" class="sidebar-nav-item list-group-item" id="contact-nav" data-parent="#sidebar">
+              <i class="icon-group"></i> Contacts
+          </a>
+          <div id="" class="list-group subitem collapse">
+              <a href="/profiles/{{ hnuser.user.username }}/contacts" class="sidebar-nav-item list-group-item" id="view-contacts-nav-link">
+                  <i class="icon-caret-right"></i> View Contacts
+              </a>
+              <a href="/profiles/{{ hnuser.user.username }}/addcontact" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Add Contact
+              </a>
+          </div>
+
+          <a href="/logout" id="logout-nav" class="sidebar-nav-item list-group-item">
+              <i class="icon-dashboard"></i> Account
+          </a>
+          <div id="" class="list-group subitem collapse">
+              <a href="/logout" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Logout
+              </a>
+              <a href="#" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Delete Account
+              </a>
+          </div>
+
+      </div>
+  </div>
+  <div id="sidebar-nav-sidebar">
+    <a href="/profiles/{{ hnuser.user.username }}"><div id="profile-sidebar-icon" class=" sidebar-icon fa fa-user"></div></a>
+    <a href="/appointments/{{ hnuser.user.username }}"><div id="appointment-sidebar-icon" class=" sidebar-icon fa fa-calendar"></div></a>
+    <a href="/profiles/{{ hnuser.user.username }}/contacts" id="contact-sidebar-icon-link"><div id="contact-sidebar-icon" class=" sidebar-icon fa fa-phone"></div></a>
+    <a href="/logout" id="logout-sidebar-icon-link"><div id="logout-sidebar-icon" class=" sidebar-icon fa fa-sign-out"></div></a>
+  </div>
+</div>
+
+<!-- Topbar - Shown when the screen size doesn't permit the sidebar -->
+<div id="topbar-bars" onclick="topbarToggle()">
+  <div id="topbar-bar1"></div>
+  <div id="topbar-bar2"></div>
+  <div id="topbar-bar3"></div>
+</div>
+<div id="topbar">
+  <div id="topbar-header">
+    <h2>Navigation</h2>
+  </div>
+  <div id="sidebar-nav-panel" class="panel panel-default">
+
+      <div id="sidebar-nav" class="list-group">
+          <a href="/profiles/{{ hnuser.user.username }}" id="profile-nav" class="sidebar-nav-item list-group-item" data-parent="#sidebar">
+              <i class="icon-dashboard"></i> Profile
+          </a>
+          <div id="" class="list-group subitem collapse">
+              <a href="/profiles/{{ hnuser.user.username }}" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> View Profile
+              </a>
+              <a href="/profiles/{{ hnuser.user.username }}/edit" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Edit Profile
+              </a>
+          </div>
+
+          <a href="#" class="sidebar-nav-item list-group-item" id="appointment-nav" data-parent="#sidebar">
+              <i class="icon-group"></i> Appointments
+          </a>
+          <div id="" class="list-group subitem collapse">
+              <a href="/appointments/{{ hnuser.user.username }}" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> View Calendar
+              </a>
+              <a href="/appointments/{{ hnuser.user.username }}/createappointment" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Create Appointment
+              </a>
+          </div>
+
+          <a href="" class="sidebar-nav-item list-group-item" id="contact-nav" data-parent="#sidebar">
+              <i class="icon-group"></i> Contacts
+          </a>
+          <div id="" class="list-group subitem collapse">
+              <a href="/profiles/{{ hnuser.user.username }}/contacts" class="sidebar-nav-item list-group-item" id="topbar-view-contacts-nav-link">
+                  <i class="icon-caret-right"></i> View Contacts
+              </a>
+              <a href="/profiles/{{ hnuser.user.username }}/addcontact" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Add Contact
+              </a>
+          </div>
+
+          <a href="/logout" id="logout-nav" class="sidebar-nav-item list-group-item">
+              <i class="icon-dashboard"></i> Account
+          </a>
+          <div id="" class="list-group subitem collapse">
+              <a href="/logout" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Logout
+              </a>
+              <a href="#" class="sidebar-nav-item list-group-item">
+                  <i class="icon-caret-right"></i> Delete Account
+              </a>
+          </div>
+
+      </div>
+  </div>
+</div>
+
+<script>
+$('#profile-nav').on('click', function(e) {
+  document.getElementById('appointment-sidebar-icon').style.height = "43px";
+  document.getElementById('contact-sidebar-icon').style.height = "43px";
+  document.getElementById('logout-sidebar-icon').style.height = "43px";
+  $("#profile-sidebar-icon").animate({
+    height: "148px"
+  }, 200, function() {
+  });
+});
+
+$('#appointment-nav').on('click', function(e) {
+  document.getElementById('profile-sidebar-icon').style.height = "43px";
+  document.getElementById('contact-sidebar-icon').style.height = "43px";
+  document.getElementById('logout-sidebar-icon').style.height = "43px";
+  $("#appointment-sidebar-icon").animate({
+    height: "148px"
+  }, 200, function() {
+  });
+});
+
+$('#contact-nav').on('click', function(e) {
+  document.getElementById('profile-sidebar-icon').style.height = "43px";
+  document.getElementById('appointment-sidebar-icon').style.height = "43px";
+  document.getElementById('logout-sidebar-icon').style.height = "43px";
+  $("#contact-sidebar-icon").animate({
+    height: "148px"
+  }, 200, function() {
+  });
+});
+
+$('#logout-nav').on('click', function(e) {
+  document.getElementById('profile-sidebar-icon').style.height = "43px";
+  document.getElementById('appointment-sidebar-icon').style.height = "43px";
+  document.getElementById('contact-sidebar-icon').style.height = "43px";
+  $("#logout-sidebar-icon").animate({
+    height: "148px"
+  }, 200, function() {
+  });
+});
+</script>
+
+<script>
+$('#sidebar-nav > a').on('click', function (e) {
+  e.preventDefault();
+
+  if(!$(this).hasClass("sidebar-active")){
+      var lastActive = $(this).closest("#sidebar-nav").children(".sidebar-active");
+      lastActive.removeClass("sidebar-active");
+      lastActive.next('div').collapse('hide');
+      $(this).addClass("sidebar-active");
+      $(this).next('div').collapse('show');
+  }
+});
+</script>

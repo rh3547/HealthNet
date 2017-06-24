@@ -1,0 +1,124 @@
+<!--
+  loglist.html
+  ==============================================================================
+
+  This shows a list of log events based on the given queries from logform.
+ -->
+
+<html>
+
+  <head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>Log List</title>
+  </head>
+
+  <body id="body">
+
+    <!-- Include the global page header -->
+    {% include "includes/header.html" %}
+
+    <!-- This is where the unique content for each page goes -->
+    <div class="content">
+
+      <div class="center">
+          {% if error_message %}
+              <h2 class="text-center" style="color: #ffffff; text-align: center;">{{ error_message }}</h2>
+          {% endif %}
+
+          {% if messages %}
+              {% for message in messages %}
+                  <h2 class="text-center scale-0 fade-grow-in"
+                      style="color: #ffffff; text-align: center;">{{ message }}</h2>
+              {% endfor %}
+          {% endif %}
+      </div>
+
+      <!-- Log Content -->
+      <div class="container" id="contacts-content">
+        <div id="contacts-content-inner" class="bg-color-white rcorners-10">
+          <h1 class="text-center">Log</h1>
+          <div class="sep-dashed-grey"></div>
+          <div class="contact-list">
+          <ul>
+            <li class="view-contact-header">
+              <div class="row">
+                <div class="col-sm-2">
+                  Source
+                </div>
+                <div class="col-sm-2">
+                  Action
+                </div>
+                <div class="col-sm-2">
+                  Event Code
+                </div>
+                <div class="col-sm-2">
+                  Date
+                </div>
+                <div class="col-sm-2">
+                  Time
+                </div>
+                <div class="col-sm-2">
+                </div>
+              </div>
+            </li>
+            <br>
+          {% if logEvents %}
+          {% for log in logEvents %}
+
+          <li class="view-contact-item">
+            <div class="row">
+              <div class="col-sm-2 contact-list-field">
+                {{ log.source }}
+              </div>
+              <div class="col-sm-2 contact-list-field">
+                {{ log.action }}
+              </div>
+              <div class="col-sm-2 contact-list-field">
+                {{ log.eventCode }}
+              </div>
+              <div class="col-sm-2 contact-list-field">
+                {{ log.date }}
+              </div>
+              <div class="col-sm-2 contact-list-field">
+                {{ log.time }}
+              </div>
+              <div class="col-sm-2 contact-list-field">
+                <a href="/log/{{ log.pk }}/delete" class="contact-list-delete-button">Delete</a>
+              </div>
+            </div>
+            <div class="sep-solid-grey" style=""></div>
+            <div class="row">
+              <div class="col-sm-12 contact-list-field">
+                {{ log.message }}
+              </div>
+            </div>
+          </li>
+
+          {% endfor %}
+          {% else %}
+          <li class="view-contact-item">
+            <div class="row">
+              <div class="col-sm-12 contact-list-field">
+                No log events match your query.
+              </div>
+            </div>
+          </li>
+          {% endif %}
+          </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <!-- End content -->
+
+    <script>
+    document.getElementById('body').style.overflow = "auto";
+    </script>
+
+  </body>
+
+</html>

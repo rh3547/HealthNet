@@ -1,0 +1,145 @@
+<!--
+  viewcontacts.html
+  ==============================================================================
+
+  This shows a list of the user's contacts.
+ -->
+
+<html>
+
+  <head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>{{ hnuser.user.username }} - Contacts</title>
+  </head>
+
+  <body id="body">
+
+    <!-- Include the global page header -->
+    {% include "includes/header.html" %}
+
+    <!-- Include the sidebar -->
+    {% include "includes/sidebar.html" %}
+
+    <!-- This is where the unique content for each page goes -->
+    <div class="content">
+
+      <div class="center">
+          {% if error_message %}
+              <h2 class="text-center" style="color: #ffffff; text-align: center;">{{ error_message }}</h2>
+          {% endif %}
+
+          {% if messages %}
+              {% for message in messages %}
+                  <h2 class="text-center scale-0 fade-grow-in"
+                      style="color: #ffffff; text-align: center;">{{ message }}</h2>
+              {% endfor %}
+          {% endif %}
+      </div>
+
+      <!-- Contacts Content -->
+      <div class="container" id="contacts-content">
+        <div id="contacts-content-inner" class="bg-color-white rcorners-10">
+          <h1 class="text-center">Contacts</h1>
+          <div class="sep-dashed-grey"></div>
+          <div class="contact-list">
+          <ul>
+            <li class="view-contact-header">
+              <div class="row">
+                <div class="col-sm-2">
+                  First Name
+                </div>
+                <div class="col-sm-1">
+                  M.I.
+                </div>
+                <div class="col-sm-2">
+                  Last Name
+                </div>
+                <div class="col-sm-2">
+                  Phone #
+                </div>
+                <div class="col-sm-2">
+                  Relation
+                </div>
+                <div class="col-sm-3">
+                </div>
+              </div>
+            </li>
+            <br>
+          {% if contacts %}
+          {% for contact in contacts %}
+
+          <li class="view-contact-item">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-2 contact-list-field">
+                    {{ contact.firstName }}
+                  </div>
+                  <div class="col-sm-1 contact-list-field">
+                    {{ contact.middleInitial }}
+                  </div>
+                  <div class="col-sm-2 contact-list-field">
+                    {{ contact.lastName }}
+                  </div>
+                  <div class="col-sm-2 contact-list-field">
+                    {{ contact.phoneNumber }}
+                  </div>
+                  <div class="col-sm-2 contact-list-field">
+                    {{ contact.get_relation_display }}
+                  </div>
+                  <div class="col-sm-3 contact-list-field">
+
+                  </div>
+                </div>
+                <div class="sep-solid-grey" style=""></div>
+                <div class="row">
+                  <div class="col-sm-12 contact-list-field">
+                    {{ contact.street }} {{ contact.city }}, {{ contact.state }}, {{ contact.zipCode }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 contact-list-field">
+                <a href="/profiles/{{ hnuser.user.username }}/editcontact/{{ contact.id }}" class="contact-list-edit-button">Edit</a>
+                <a href="/profiles/{{ hnuser.user.username }}/deletecontact/{{ contact.id }}" class="contact-list-delete-button">Delete</a>
+              </div>
+            </div>
+          </li>
+
+          {% endfor %}
+          {% else %}
+          <li class="view-contact-item">
+            <div class="row">
+              <div class="col-sm-12 contact-list-field">
+                You have no contacts
+              </div>
+            </div>
+          </li>
+          {% endif %}
+          </ul>
+          </div>
+
+        </div>
+
+        <div class="center text-center edit-submit">
+          <a href="/profiles/{{ hnuser.user.username }}/addcontact">
+              <input type="submit" class="add-contact-button button-gradient-red" value="Add Contact">
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- End content -->
+
+    <script>
+    document.getElementById('body').style.overflow = "auto";
+    // $("#body").animate({
+    //     width: "100%"
+    // }, 1000, function () {
+    //     document.getElementById('body').style.overflow = "auto";
+    // });
+    </script>
+
+  </body>
+
+</html>

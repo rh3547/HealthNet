@@ -1,0 +1,166 @@
+<!--
+  editcontact.html
+  ==============================================================================
+
+  This template shows the form used to edit a users contact.
+ -->
+
+<html>
+
+  <head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>Edit Appointment</title>
+  </head>
+
+  <body>
+
+    <!-- Include the global page header -->
+    {% include "includes/header.html" %}
+
+    <!-- Include the page sidebar -->
+    {% include "includes/sidebar.html" %}
+
+    <!-- This is where the unique content for each page goes -->
+    <div class="content">
+
+      <div class="center">
+        <div class="edit-form">
+          <div class="bg-color-white rcorners-10 edit-form-inner">
+            <h1>Edit Appointment</h1>
+            <div class="sep-dashed-grey"></div>
+            <form action="/appointments/{{ username }}/{{ pk }}/edit" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-label">{{ form.title.label_tag }}</div>
+                  <div class="form-field">{{ form.title }}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="form-label" for="startDate">Start Date</label>
+                  <input class="form-field" type="text" id="datepicker" name="startDate">
+                  <label class="form-label" for="startTime">Start Time</label>
+                  <input class="form-field" type="text" id="starttime" name="startTime">
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label" for="endDate">End Date</label>
+                  <input class="form-field" type="text" id="datepicker2" name="endDate">
+                  <label class="form-label" for="endTime">End Time</label>
+                  <input class="form-field" type="text" id="endtime" name="endTime">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-label">{{ form.doctor.label_tag }}</div>
+                  <div class="form-field">{{ form.doctor }}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="form-label">{{ form.hospital.label_tag }}</div>
+                  <div class="form-field">{{ form.hospital }}</div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-label">{{ form.room.label_tag }}</div>
+                  <div class="form-field">{{ form.room }}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-label">{{ form.reason.label_tag }}</div>
+                  <div class="form-field">{{ form.reason }}</div>
+                </div>
+              </div>
+              <div class="edit-submit"><input id="appointment-submit" type="submit" value="Save" class="button-gradient-red"/></div>
+            </form>
+            <div class="edit-submit"><a href="/appointments/{{ hnuser.user.username }}"><input type="submit" class="button-gradient-red" value="Cancel"></a></div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+
+    var startMonth = parseInt({{ startDate.month }});
+    var startDay = parseInt({{ startDate.day }});
+
+    var startYearStr = {{ startDate.year }};
+    var startMonthStr = {{ startDate.month }};
+    var startDayStr = {{ startDate.day }};
+
+    if (startMonth < 10) {
+      startMonthStr = "0" + String(startMonth);
+    }
+
+    if (startDay < 10) {
+      startDayStr = "0" + String(startDay);
+    }
+
+    document.getElementById('datepicker').value = startYearStr + "-" + startMonthStr + "-" + startDayStr;
+
+    document.getElementById('starttime').value = "{{ startTime }}";
+
+    var endMonth = parseInt({{ endDate.month }});
+    var endDay = parseInt({{ endDate.day }});
+
+    var endYearStr = {{ endDate.year }};
+    var endMonthStr = {{ endDate.month }};
+    var endDayStr = {{ endDate.day }};
+
+    if (endMonth < 10) {
+      endMonthStr = "0" + String(endMonth);
+    }
+
+    if (endDay < 10) {
+      endDayStr = "0" + String(endDay);
+    }
+
+    document.getElementById('datepicker2').value = endYearStr + "-" + endMonthStr + "-" + endDayStr;
+
+    document.getElementById('endtime').value = "{{ endTime }}";
+
+    $(function() {
+      $( "#datepicker" ).datepicker({
+        yearRange: "1910:2016",
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd"
+      });
+    });
+
+    $(function() {
+      $( "#datepicker2" ).datepicker({
+        yearRange: "1910:2016",
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd"
+      });
+    });
+
+    $('#starttime').timepicker({
+      'timeFormat': 'g:i a',
+      'step': 15
+    // 'disableTimeRanges': [
+    //     ['1am', '2am'],
+    //     ['3am', '4:01am']
+    // ]
+    });
+
+    $('#endtime').timepicker({
+      'timeFormat': 'g:i a',
+      'step': 15
+    // 'disableTimeRanges': [
+    //     ['1am', '2am'],
+    //     ['3am', '4:01am']
+    // ]
+    });
+    </script>
+    <!-- End content -->
+  </body>
+
+</html>

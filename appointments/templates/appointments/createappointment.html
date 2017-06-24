@@ -1,0 +1,72 @@
+<!--
+  index.html
+  ==============================================================================
+
+  This template shows the form used to log in to the system.
+ -->
+
+<html>
+
+<head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>Create Appointment</title>
+</head>
+
+<body style="overflow: scroll;">
+
+<!-- Include the global page header -->
+{% include "includes/header.html" %}
+
+<!-- Include the page sidebar -->
+{% include "includes/sidebar.html" %}
+
+<!-- This is where the unique content for each page goes -->
+<div class="content">
+
+    <div class="center">
+        <div class="edit-form">
+            <div class="bg-color-white rcorners-10 edit-form-inner">
+                <form action="/appointments/{{ username }}/createappointment" method="post">
+                    <label for="start">Start:</label>
+                    <input type="text" id="datepicker" name="start">
+                    <label for="end">End:</label>
+                    <input type="text" id="datepicker2" name="end">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-label">
+                            {{ field.label_tag }}
+                        </div>
+                        <div class="form-field">
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <input type="submit" value="Add"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#datepicker").datepicker({
+            yearRange: "1910:2015",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd"
+        });
+
+        $("#datepicker2").datepicker({
+            yearRange: "1910:2015",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd"
+        });
+    });
+</script>
+<!-- End content -->
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!--
+  calendartest.html
+  ==============================================================================
+
+  This template shows a patient's profile.
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>HealthNet - Calendar</title>
+</head>
+
+<body id="calendar-body">
+
+<!-- Include the global page header -->
+{% include "includes/header.html" %}
+
+<!-- Include the page sidebar -->
+{% include "includes/sidebar.html" %}
+
+<!-- This is where the unique content for each page goes -->
+<div class="content">
+
+    <div class="row">
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-8" style="padding: 0;">
+            <div class="cal-block">
+                <div class="cal-inner bg-color-white rcorners-10" id="cal-in">
+
+                    <div id='calendar'></div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-3" style="padding: 0;">
+            <div class="cal-block-2">
+                <div class="day-inner bg-color-white rcorners-10" id="profile-pic-inner">
+                    <h1 class="text-center">Today</h1> {# Day clicked #}
+                    <div id='calendar2'></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        // page is now ready, initialize the calendar...
+        var sy = {{json_sy|safe}};
+        var sm = {{json_sm|safe}};
+        var sd = {{json_sd|safe}};
+        var sh = {{json_sh|safe}};
+        var sn = {{json_sn|safe}};
+        var ey = {{json_ey|safe}};
+        var em = {{json_em|safe}};
+        var ed = {{json_ed|safe}};
+        var eh = {{json_eh|safe}};
+        var en = {{json_en|safe}};
+        var id = {{json_id|safe}};
+
+        var eventArray = [];
+        for (var key in sy) {
+            var endhour = eh[key];
+            var endmin = en[key];
+            var starthour = sh[key];
+            var startmin = sn[key];
+            var event = {
+                id: id[key],
+                title: key.title,
+                start: new Date(sy[key], sm[key] - 1, sd[key], starthour, startmin),
+                end: new Date(ey[key], em[key] - 1, ed[key], endhour, endmin)
+            };
+            eventArray.push(event);
+        }
+
+        $('#calendar').fullCalendar({
+            // put your options and callbacks here
+
+
+            theme: true,
+
+            header: {
+                left: 'month,agendaWeek',
+                center: 'title',
+                right: 'today prev,next',
+                prev: 'circle-triangle-w',
+                next: 'circle-triangle-e'
+            },
+
+            events: eventArray,
+
+            defaultView: 'month',
+
+            height: 561,
+
+            dayClick: function (date, jsEvent, view) {
+
+                var days = document.getElementsByClassName("fc-day");
+
+                var i;
+                for (i = 0; i < days.length; i++) {
+                    days[i].style.background = "#ffffff url(\"images/ui-bg_flat_75_ffffff_40x100.png\") 50% 50% repeat-x";
+                }
+
+                // change the day's background color just for fun
+                $(this).css('background', '#FF5D63 url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x');
+            },
+
+            eventClick: function (calEvent, jsEvent, view) {
+
+                window.location.replace("/appointments/{{ username }}/"+calEvent.id);
+
+            }
+
+        })
+        $('#calendar2').fullCalendar({
+            // put your options and callbacks here
+
+            theme: false,
+
+            header: false,
+
+            events: eventArray,
+
+            defaultView: 'agendaDay',
+
+            height: 500,
+
+            eventClick: function (calEvent, jsEvent, view) {
+
+                window.location.replace("/appointments/{{ username }}/"+calEvent.id);
+
+            }
+
+
+        })
+
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

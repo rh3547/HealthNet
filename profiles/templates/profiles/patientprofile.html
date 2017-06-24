@@ -1,0 +1,242 @@
+<!--
+  patientprofile.html
+  ==============================================================================
+
+  This template shows a patient's profile.
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>HealthNet - {{ hnuser.user.username }}</title>
+</head>
+
+<body id="profile-body">
+
+<!-- Include the global page header -->
+{% include "includes/header.html" %}
+
+<!-- Include the page sidebar -->
+{% include "includes/sidebar.html" %}
+
+<!-- This is where the unique content for each page goes -->
+<div class="content">
+
+  <!-- Patient Profile Content -->
+  <div class="container profile-content">
+    <div class="row">
+
+      <!-- Right Column with profile pic and basic info -->
+      <div class="col-sm-4 col-sm-push-8"> <!-- columns backwards for mobile/resizing purposes -->
+
+        <!-- Profile Picture -->
+        <div class="profile-pic">
+          <div class="profile-pic-inner bg-color-white rcorners-10" id="profile-pic-inner">
+            <div id="profile-pic-area">
+              <div id="profile-pic-edit">
+                <a href="/profiles/{{ hnuser.user.username }}">
+                  <div id="profile-pic-edit-overlay">
+                    <div id="profile-pic-edit-icon">
+                      <i class="fa fa-camera"></i>
+                      <p>Edit</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <img src='/static/images/profile.png' id="profile-pic-pic">
+            </div>
+            <h1 class="text-center word-break">{{ thiscontact.firstName }} {{ thiscontact.middleInitial }}. {{ thiscontact.lastName }}</h1>
+          </div>
+        </div>
+        <!-- End Profile Picture -->
+
+        <!-- Basic Info -->
+        <div class="basic-info">
+          <div class="basic-info-inner bg-color-white rcorners-10" id="profile-pic-inner">
+            <h2 class="text-left">Basic Information</h2>
+            <div class="sep-solid-grey" style="margin-bottom: 10px; width: 100%;"></div>
+
+            <div class="profile-info-spacing">
+              <div class="field-icon fa fa-phone"></div>
+              <p class="profile-info"> {{ thiscontact.phoneNumber }} </p>
+            </div>
+            <div class="profile-info-spacing">
+              <div class="field-icon fa fa-calendar"></div>
+              <p class="profile-info">{{ hnuser.birthDate }} </p>
+            </div>
+            <div class="profile-info-spacing">
+              <div class="field-icon fa fa-arrow-up"></div>
+              <p class="profile-info">{{ hnuser.heightFeet }}', {{ hnuser.heightInches }}"</p>
+            </div>
+            <div class="profile-info-spacing">
+              <div class="field-icon fa fa-balance-scale"></div>
+              <p class="profile-info">{{ hnuser.weight }} </p>
+            </div>
+            <div class="profile-address-spacing rcorner-top-right">
+              <div class="address-field-icon fa fa-map-marker rcorner-top-left" style="color: #D22121;"></div>
+              <p class="profile-info">{{ thiscontact.street }}</p>
+            </div>
+            <div class="profile-address-spacing">
+              <div class="address-field-icon fa fa-map-marker"></div>
+              <p class="profile-info">{{ thiscontact.city }}, {{ thiscontact.state }}</p>
+            </div>
+            <div class="profile-address-spacing rcorner-bottom-right">
+              <div class="address-field-icon fa fa-globe rcorner-bottom-left" style="color: #D22121;"></div>
+              <p class="profile-info">{{ thiscontact.zipcode }}</p>
+            </div>
+          </div>
+        </div>
+        <!-- End Basic Info -->
+
+      </div>
+      <!-- End Right Column -->
+
+      <!-- Left Column with medical info -->
+      <div class="col-sm-8 col-sm-pull-4">
+
+        <!-- Basic Medical Info -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="basic-info">
+              <div class="basic-info-inner bg-color-white rcorners-10" id="profile-pic-inner">
+                <h2 class="text-left">Basic Medical Info</h2>
+                <div class="sep-solid-grey" style="margin-bottom: 10px; width: 100%; margin-left: 0px; margin-right: 0px;"></div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h3>Insurance Company</h3>
+                        <p class="text-left word-break">{{ hnuser.insuranceCompany }}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h3>Preferred Hospital</h3>
+                        <p class="text-left word-break">{{ hnuser.hospitalPref }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <h3>Insurance ID</h3>
+                    <p class="text-left word-break">{{ hnuser.insuranceId }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Basic Medical Info -->
+
+        <!-- Tabbed Medical Info -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="basic-info">
+              <div class="basic-info-inner-2 bg-color-white rcorners-10" id="tabs-inner">
+
+                <!-- Tabs -->
+                <div id="tabs">
+                  <ul>
+                    <li><a href="#tabs-1">Conditions</a></li>
+                    <li><a href="#tabs-2">Allergies</a></li>
+                    <li><a href="#tabs-3">Prescriptions</a></li>
+                  </ul>
+                  <div id="tabs-1">
+                    {% if hnuser.conditions %}
+                    <p>{{ hnuser.conditions }}</p>
+                    {% else %}
+                    <p>No Conditions</p>
+                    {% endif %}
+                  </div>
+                  <div id="tabs-2">
+                    {% if hnuser.allergies %}
+                    <p>{{ hnuser.allergies }}</p>
+                    {% else %}
+                    <p>No Allergies</p>
+                    {% endif %}
+                  </div>
+                  <div id="tabs-3">
+                    {% if hnuser.prescriptions %}
+                    <p>{{ hnuser.prescriptions }}</p>
+                    {% else %}
+                    <p>No Prescriptions</p>
+                    {% endif %}
+                  </div>
+                </div>
+                <!-- End Tabs -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Tabbed Medical Info -->
+
+      </div>
+    </div>
+  </div>
+  <!-- End Profile Content -->
+
+</div>
+<!-- End content -->
+
+<!-- General Document Script -->
+<script>
+document.getElementById('profile-body').style.overflow = "auto";
+</script>
+
+<!-- Tabs Script -->
+<script>
+$(function() {
+  $( "#tabs" ).tabs();
+});
+</script>
+
+<!-- Profile Picture Hover Edit Script -->
+<script>
+document.getElementById('profile-pic-edit-overlay')
+.style.width = document.getElementById('profile-pic-pic').style.width;
+
+var profileLink = $('#profile-pic-edit-overlay')
+var profileButton = $('#profile-pic-edit-icon')
+profileLink.addClass('hide');
+document.getElementById('profile-pic-edit-icon').style.opacity = "0";
+
+// When the profile picture is hovered with the mouse
+$("#profile-pic-edit").hover(
+
+    // Function to call when mouse enters
+    function () {
+        profileLink.removeClass('hide');
+
+        profileLink.animate({
+            backgroundColor: "rgba(0, 0, 0, 0.60)"
+        }, 300, function () {
+
+        });
+
+        profileButton.fadeTo("normal", 1, function () {
+            document.getElementById('profile-pic-edit-icon').style.opacity = "1";
+        });
+    },
+
+    // Function to call when mouse exits
+    function () {
+        profileLink.animate({
+            backgroundColor: "rgba(0, 0, 0, 0.00)"
+        }, 300, function () {
+            profileLink.addClass('hide');
+        });
+
+        profileButton.fadeTo("normal", 0, function () {
+            document.getElementById('profile-pic-edit-icon').style.opacity = "0";
+        });
+    }
+);
+</script>
+
+</body>
+
+</html>

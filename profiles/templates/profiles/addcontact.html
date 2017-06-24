@@ -1,0 +1,92 @@
+<!--
+  addcontact.html
+  ==============================================================================
+
+  This template shows the form used to add a new user contact.
+ -->
+
+<html>
+
+<head>
+    <!-- Include the global CSS, JS, etc. links -->
+    {% include "includes/headlinks.html" %}
+
+    <title>Add Contact</title>
+</head>
+
+<body
+
+<!-- Include the global page header -->
+{% include "includes/header.html" %}
+
+<!-- Include the page sidebar -->
+{% include "includes/sidebar.html" %}
+
+<!-- This is where the unique content for each page goes -->
+<div class="content">
+
+    <div class="edit-form" id="edit-form">
+        <div class="bg-color-white rcorners-10 edit-form-inner">
+            <h1>Add Contact</h1>
+            <div class="sep-dashed-grey"></div>
+            <form class="center" action="/profiles/{{ username }}/addcontact" method="post">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-10">
+                    <div class="form-label">{{ form.firstName.label_tag }}</div>
+                    <div class="form-field">{{ form.firstName }}</div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-label">{{ form.middleInitial.label_tag }}</div>
+                    <div class="form-field">{{ form.middleInitial }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-label">{{ form.lastName.label_tag }}</div>
+                    <div class="form-field">{{ form.lastName }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-label">{{ form.phoneNumber.label_tag }}</div>
+                    <div class="form-field">{{ form.phoneNumber }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <div class="form-label">{{ form.street.label_tag }}</div>
+                    <div class="form-field">{{ form.street }}</div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-label">{{ form.city.label_tag }}</div>
+                    <div class="form-field">{{ form.city }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-label">{{ form.state.label_tag }}</div>
+                    <div class="form-field">{{ form.state }}</div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-label">{{ form.zipcode.label_tag }}</div>
+                    <div class="form-field">{{ form.zipcode }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-label">{{ form.relation.label_tag }}</div>
+                    <div class="form-field">{{ form.relation }}</div>
+                  </div>
+                </div>
+                <div class="edit-submit"><input class="button-gradient-red" type="submit" value="Add"/></div>
+            </form>
+            <div class="edit-submit"><a href="/profiles/{{ username }}/contacts"><input type="submit" class="button-gradient-red"
+                                                                               value="Cancel"></a></div>
+        </div>
+    </div>
+</div>
+<!-- End content -->
+</body>
+
+</html>
